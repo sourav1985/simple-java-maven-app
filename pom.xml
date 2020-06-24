@@ -23,12 +23,16 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.0.2</version>
         <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>com.mycompany.app.App</mainClass>
+          <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
+          <archive>
+            <manifestEntries>              
+              <Git-Repo>${git_repo}</Git-Repo>
+              <Git-Branch>${git_branch}</Git-Branch>
+              <Git-Hash>${git_commit}</Git-Hash>
+              <Build-Number>${build_num}</Build-Number>
+            </manifestEntries>          
           </archive>
         </configuration>
       </plugin>
