@@ -118,7 +118,7 @@
             <configuration>
                      <archive>
                 <manifestEntries>
-                   <S-Revision>${buildNumber}</S-Revision>
+                   <SCM-Revision>${buildNumber}</SCM-Revision>
                 </manifestEntries>
                 </archive>
         </configuration>
