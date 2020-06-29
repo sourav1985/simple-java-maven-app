@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<!--removed groupId-->
+<groupId></groupId>
+<!--removed artifactId-->
+<artifactId>ratings-cache</artifactId>
+<version>1.2.2-SNAPSHOT</version>
+<!--removed name-->
+<name>user-cache</name>
+<description>user-cache</description>
+</s>
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <compileSource>1.8</compileSource>
+    <spring.version>4.3.20.RELEASE</spring.version>
+    <axis2.version>1.6.2</axis2.version>
+    </properties>
+<distributionManagement>
+    <repository>
+        <uniqueVersion>false</uniqueVersion>
+        <!--removed Id-->
+        <id>user-repo</id>
+        <!--removed URL-->
+        <url>https://nexus.user.com/service/local/staging/deploy/maven2</url>
+    </repository>
+    <snapshotRepository>
+        <uniqueVersion>false</uniqueVersion>
+        <!--removed Id-->
+        <id>user-repo</id>
+        <!--removed url-->
+        <url>https://nexus.user.com/content/repositories/userCS-Snapshots</url>
+    </snapshotRepository>
+</distributionManagement>
+<build>
+    <plugins>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+                <source>${compileSource}</source>
+                <target>${compileSource}</target>
+            </configuration>
+        </plugin>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.4</version>
+            <dependencies>
+                <dependency>
+                    <groupId>com.user.soa</groupId>
+                    <artifactId>soa-assembly-descriptor</artifactId>
+                    <version>1.0.0</version>
+                </dependency>
+            </dependencies>
+            <executions>
+                <execution>
+                    <id>make-assembly</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                    <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>soa-assembly</descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <version>2.8.2</version>
+            <configuration>
+                <skip>true</skip>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.4.8</version>
+            <extensions>true</extensions>
+            <configuration>
+                <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
+                <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                <!--removed serverId-->
+                <serverId>user-repo</serverId>
+                <nexusUrl>https://nexus.user.com/</nexusUrl>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>deploy-staged</id>
+                    <phase>deploy</phase>
+                    <goals>
+                        <goal>deploy</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>buildnumber-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>validate</phase>
+                    <goals>
+                        <goal>create</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <doCheck>false</doCheck>
+                <doUpdate>true</doUpdate>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                     <archive>
+                <manifestEntries>
+                   <S-Revision>${buildNumber}</S-Revision>
+                </manifestEntries>
+                </archive>
+        </configuration>
+        </plugin>
+    </plugins>
+</build>
